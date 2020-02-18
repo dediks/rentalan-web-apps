@@ -1,0 +1,72 @@
+﻿@model IEnumerable<PakMua.tb_order>
+
+@{
+    ViewBag.Title = "Incoming Order";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card">
+    <div class="card-header">
+        <h3>Incoming Order</h3>
+    </div>
+    <div class="card-body" style="min-height : 400px">
+        <table class="table">
+            <tr>
+                <th>
+                    No Invoice
+                </th>
+                <th>
+                    Tanggal Order
+                </th>
+                <th>
+                    Tgl Ambil
+                </th>
+                <th>
+                    Tgl Kembali
+                </th>
+                <th>
+                    Jumlah
+                </th>
+                <th>
+                    Total Harga
+                </th>
+                <th>
+                    Member
+                </th>
+                <th>
+
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.no_invoice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tgl_order)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ambil)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.kembali)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.jumlah_mobil)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.total_harga)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tb_member.nama)
+                    </td>                   
+                    <td>
+                        <a class="btn btn-info" href="@Url.Action("Konfirmasi", "Order", new { id = item.id_order})">Konfirmasi</a>
+                    </td>
+                </tr>
+            }
+
+        </table>
+        </div>
+    </div>

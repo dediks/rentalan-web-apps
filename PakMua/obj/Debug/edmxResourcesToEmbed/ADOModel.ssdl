@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="db_rentalanModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="tb_member">
+    <Key>
+      <PropertyRef Name="id_member" />
+    </Key>
+    <Property Name="id_member" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nama" Type="varchar" MaxLength="50" />
+    <Property Name="alamat" Type="text" />
+    <Property Name="no_hp" Type="varchar" MaxLength="50" />
+    <Property Name="username" Type="varchar" MaxLength="50" />
+    <Property Name="password" Type="varchar" MaxLength="50" />
+    <Property Name="email" Type="varchar" MaxLength="100" />
+    <Property Name="role" Type="char" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="tb_mobil">
+    <Key>
+      <PropertyRef Name="id_mobil" />
+    </Key>
+    <Property Name="id_mobil" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nama" Type="varchar" MaxLength="50" />
+    <Property Name="merk" Type="varchar" MaxLength="50" />
+    <Property Name="model" Type="varchar" MaxLength="50" />
+    <Property Name="varian" Type="varchar" MaxLength="50" />
+    <Property Name="mesin" Type="int" />
+    <Property Name="tenaga" Type="int" />
+    <Property Name="tempat_duduk" Type="int" />
+    <Property Name="transmisi" Type="char" MaxLength="10" />
+    <Property Name="ac" Type="char" MaxLength="10" />
+    <Property Name="harga_sewa" Type="money" />
+    <Property Name="deskripsi" Type="text" />
+    <Property Name="foto" Type="varchar" MaxLength="255" />
+    <Property Name="status" Type="char" MaxLength="15" />
+    <Property Name="stok" Type="int" />
+  </EntityType>
+  <EntityType Name="tb_order">
+    <Key>
+      <PropertyRef Name="id_order" />
+    </Key>
+    <Property Name="id_order" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="no_invoice" Type="varchar" MaxLength="50" />
+    <Property Name="tgl_order" Type="date" />
+    <Property Name="ambil" Type="date" />
+    <Property Name="kembali" Type="date" />
+    <Property Name="jumlah_hari" Type="int" />
+    <Property Name="jumlah_mobil" Type="int" />
+    <Property Name="total_harga" Type="money" />
+    <Property Name="id_member" Type="int" />
+    <Property Name="status" Type="char" MaxLength="15" />
+  </EntityType>
+  <EntityType Name="tb_order_mobil">
+    <Key>
+      <PropertyRef Name="id_order_mobil" />
+    </Key>
+    <Property Name="id_order_mobil" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_mobil" Type="int" />
+    <Property Name="id_order" Type="int" />
+    <Property Name="tgl" Type="date" />
+    <Property Name="jumlah" Type="int" />
+  </EntityType>
+  <EntityType Name="tb_payment">
+    <Key>
+      <PropertyRef Name="id_payment" />
+    </Key>
+    <Property Name="id_payment" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nama" Type="varchar" MaxLength="50" />
+    <Property Name="nama_bank" Type="varchar" MaxLength="50" />
+    <Property Name="no_rekening" Type="varchar" MaxLength="50" />
+    <Property Name="transfer" Type="money" />
+    <Property Name="id_order" Type="int" />
+  </EntityType>
+  <EntityType Name="tb_pengembalian">
+    <Key>
+      <PropertyRef Name="id_pengembalian" />
+    </Key>
+    <Property Name="id_pengembalian" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_order" Type="int" />
+    <Property Name="tgl_pengembalian" Type="date" />
+    <Property Name="denda" Type="money" />
+  </EntityType>
+  <Association Name="FK_tb_order_mobil_tb_mobil">
+    <End Role="tb_mobil" Type="Self.tb_mobil" Multiplicity="0..1" />
+    <End Role="tb_order_mobil" Type="Self.tb_order_mobil" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_mobil">
+        <PropertyRef Name="id_mobil" />
+      </Principal>
+      <Dependent Role="tb_order_mobil">
+        <PropertyRef Name="id_mobil" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_order_mobil_tb_order">
+    <End Role="tb_order" Type="Self.tb_order" Multiplicity="0..1" />
+    <End Role="tb_order_mobil" Type="Self.tb_order_mobil" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_order">
+        <PropertyRef Name="id_order" />
+      </Principal>
+      <Dependent Role="tb_order_mobil">
+        <PropertyRef Name="id_order" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_order_tb_member">
+    <End Role="tb_member" Type="Self.tb_member" Multiplicity="0..1" />
+    <End Role="tb_order" Type="Self.tb_order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_member">
+        <PropertyRef Name="id_member" />
+      </Principal>
+      <Dependent Role="tb_order">
+        <PropertyRef Name="id_member" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_payment_tb_order">
+    <End Role="tb_order" Type="Self.tb_order" Multiplicity="0..1" />
+    <End Role="tb_payment" Type="Self.tb_payment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_order">
+        <PropertyRef Name="id_order" />
+      </Principal>
+      <Dependent Role="tb_payment">
+        <PropertyRef Name="id_order" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_pengembalian_tb_order">
+    <End Role="tb_order" Type="Self.tb_order" Multiplicity="0..1" />
+    <End Role="tb_pengembalian" Type="Self.tb_pengembalian" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_order">
+        <PropertyRef Name="id_order" />
+      </Principal>
+      <Dependent Role="tb_pengembalian">
+        <PropertyRef Name="id_order" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="db_rentalanModelStoreContainer">
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_member" EntityType="Self.tb_member" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_mobil" EntityType="Self.tb_mobil" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_order" EntityType="Self.tb_order" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_order_mobil" EntityType="Self.tb_order_mobil" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_payment" EntityType="Self.tb_payment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_pengembalian" EntityType="Self.tb_pengembalian" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_tb_order_mobil_tb_mobil" Association="Self.FK_tb_order_mobil_tb_mobil">
+      <End Role="tb_mobil" EntitySet="tb_mobil" />
+      <End Role="tb_order_mobil" EntitySet="tb_order_mobil" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_order_mobil_tb_order" Association="Self.FK_tb_order_mobil_tb_order">
+      <End Role="tb_order" EntitySet="tb_order" />
+      <End Role="tb_order_mobil" EntitySet="tb_order_mobil" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_order_tb_member" Association="Self.FK_tb_order_tb_member">
+      <End Role="tb_member" EntitySet="tb_member" />
+      <End Role="tb_order" EntitySet="tb_order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_payment_tb_order" Association="Self.FK_tb_payment_tb_order">
+      <End Role="tb_order" EntitySet="tb_order" />
+      <End Role="tb_payment" EntitySet="tb_payment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_pengembalian_tb_order" Association="Self.FK_tb_pengembalian_tb_order">
+      <End Role="tb_order" EntitySet="tb_order" />
+      <End Role="tb_pengembalian" EntitySet="tb_pengembalian" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

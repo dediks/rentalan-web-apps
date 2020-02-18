@@ -1,0 +1,100 @@
+﻿
+@model PakMua.tb_order
+
+@{
+    ViewBag.Title = "Konfirmasi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h5>Konfirmasi</h5>
+    </div>
+    <div class="card-body mt-5" style="min-height: 400px">
+        <div class="row" style="margin-top: 50px">
+            <div class="col-6">
+                <dl class="dl-horizontal">
+                    <dt>
+                        No Invoice
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.no_invoice)
+                    </dd>
+
+                    <dt>
+                        Tgl Order
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.tgl_order)
+                    </dd>
+
+                    <dt>
+                        Tgl Ambil
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.ambil)
+                    </dd>
+
+                    <dt>
+                        Tgl Kembali
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.kembali)
+                    </dd>
+
+                    <dt>
+                        Jumlah Hari
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.jumlah_hari)
+                    </dd>
+
+                    <dt>
+                        Total Mobil
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.jumlah_mobil)
+                    </dd>
+
+                    <dt>
+                        Total harga
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.total_harga)
+                    </dd>
+
+                    <dt>
+                        Status
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.status)
+                    </dd>
+
+                    <dt>
+                        Nama Member
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.tb_member.nama)
+                    </dd>
+
+                </dl>
+            </div>
+            <div class="col-6">
+                <div class="align-middle mt-5" style="margin-top: 300px">
+                    <a href="@Url.Action("ConfirmReview", "Order", new { id = Model.id_order})" class="btn btn-warning mb-5">Confirm</a>
+                    <br>
+                    <a value="Konfirmasi" class="btn btn-light" href="@Url.Action("Review", "Order")">Kembali</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

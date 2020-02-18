@@ -1,0 +1,110 @@
+﻿@model PakMua.tb_payment
+
+
+@{
+    ViewBag.Title = "Your Order";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+            <!--REVIEW ORDER-->
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    No Invoice
+                </div>
+                <div class="panel-body">
+                    @ViewBag.invoice
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+            <!--SHIPPING METHOD-->
+            @using (Html.BeginForm("PaymentResult", "CariMobil", new { id_order = ViewData["id_order"] }))
+            {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="panel panel-info">
+                <div class="panel-heading">Pembayaran</div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <div class="col-md-12 mt-3"><strong>Nama</strong></div>
+                        <div class="col-md-12 mt-3">
+                            @Html.EditorFor(model => model.nama, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.nama, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12 mt-3"><strong>Nama Bank:</strong></div>
+                        <div class="col-md-12 mt-3">
+                            @Html.EditorFor(model => model.nama_bank, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.nama_bank, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12 mt-3"><strong>No Rekening:</strong></div>
+                        <div class="col-md-12 mt-3">
+                            @Html.EditorFor(model => model.no_rekening, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.no_rekening, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12 mt-3"><strong>Nominal:</strong></div>
+                        <div class="col-md-12 mt-3">
+                            @Html.EditorFor(model => model.transfer, new { htmlAttributes = new { @class = "form-control form-control-lg" } })
+                            @Html.ValidationMessageFor(model => model.transfer, "", new { @class = "text-danger" })
+                        </div>
+                    </div>                    
+                    <div class="form-group mt-5">
+                        <div class="col-md-12 mt-5">
+                            <input type="submit" value="Bayar" class="btn btn-primary pull-right" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            }
+                    <!--SHIPPING METHOD END-->
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <!--REVIEW ORDER-->
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            Review Order
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="col-sm-3 col-xs-3">
+                                    <img class="img-responsive" src="@Url.Content(ViewBag.foto)" />
+                                </div>
+                                <div class="col-sm-6 col-xs-6">
+                                    <div class="col-xs-12" id="nama-mobil">@ViewBag.nama_mobil</div>
+                                    <div class="col-xs-12"><small>Jumlah hari :<span>@ViewBag.jumlah_hari</span></small></div>
+                                </div>
+                                <div class="col-sm-3 col-xs-3 text-right">
+                                    <h6><span>Jumlah Mobil : </span>@ViewBag.jumlah_mobil</h6>
+                                </div>
+                            </div>
+                            <div class="form-group"><hr /></div>
+                            <div class="form-group">
+                                <div class="col-xs-12 mt-3">
+                                    <strong>Total</strong>
+                                    <div class="pull-right"><span>@ViewBag.total_harga</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--REVIEW ORDER END-->
+                </div>
+            </div>
+
+            @section scripts {
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        //var data = window.localStorage.getItem("DataOrder");
+
+                        //console.log('retrievedObject: ', JSON.stringify(data));
+                    })
+                </script>
+            }

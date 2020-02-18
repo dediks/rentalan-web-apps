@@ -1,0 +1,120 @@
+﻿@model PakMua.tb_mobil
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>tb_mobil</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nama)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nama)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.merk)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.merk)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.model)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.model)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.varian)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.varian)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mesin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mesin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tenaga)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tenaga)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tempat_duduk)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tempat_duduk)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.transmisi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.transmisi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ac)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ac)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.harga_sewa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.harga_sewa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.deskripsi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.deskripsi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.foto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.foto)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

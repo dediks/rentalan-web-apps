@@ -1,0 +1,244 @@
+﻿@model IEnumerable<PakMua.tb_order>
+
+@{
+    ViewBag.Title = "Riwayat Order";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card">
+    <div class="card-header">
+        <h3>Riwayat Order</h3>
+    </div>
+    <div class="card-body" style="min-height : 450px">
+        <table class="table">
+            <tr>
+                <th>
+                    No Invoice
+                </th>
+                <th>
+                    Tanggal Order
+                </th>
+                <th>
+                    Tgl Ambil
+                </th>
+                <th>
+                    Tgl Kembali
+                </th>
+                <th>
+                    Jumlah
+                </th>
+                <th>
+                    Total Harga
+                </th>
+                <th>
+                    Member
+                </th>
+                <th class="text-center">
+                    Status
+                </th>
+                <th class="text-center">Action
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.no_invoice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tgl_order)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ambil)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.kembali)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.jumlah_mobil)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.total_harga)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tb_member.nama)
+                    </td>
+                    <td class="text-center">
+                        @if (Session["role"] != null && Session["role"].ToString().Trim() != "member")
+                        {
+                            <span>@Html.DisplayFor(modelItem => item.status)</span>
+                        }
+                        else
+                        {
+                            if (item.status.Trim() == "PAID")
+                            {
+                                <span class="btn bg-dark text-white">Moderated</span>
+                            }
+                            else if (item.status.Trim() == "READY")
+                            {
+                                <span class="btn btn-success text-white">Done</span>
+                            }
+                            else
+                            {
+                                <span class="btn btn-warning text-white">@Html.DisplayFor(modelItem => item.status)</span>
+                            }
+                        }                       
+                    </td>
+                    <td class="text-center">
+                        @if (Session["role"] != null && Session["role"].ToString().Trim() == "member")
+                        {
+                            if (item.status.Trim().Equals("UNPAID"))
+                            {
+                                <a href="@Url.Action("HasilPesan", "CariMobil", new { no_invoice = item.no_invoice })" class="btn btn-info">Bayar</a>
+                                <a href="@Url.Action("Delete", "Order", new { id = item.id_order })" class="btn btn-danger">Batalkan</a>
+                            }
+                            else if (item.status.Trim().Equals("CONFIRMED"))
+                            {
+                                <a href="#addBookDialog" data-id="@item.id_order" data-toggle="modal" class="open-AddBookDialog btn btn-primary">Kembalikan</a>
+                            }
+
+                        }
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+
+        <div class="modal hide" id="addBookDialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Pengembalian</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="modal-body">
+                            <input type="hidden" name="id_order" id="id_order" value="" />
+
+                            <form>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group mb-5">
+                                            <label for="tgl-pengembalian">Tanggal Pengembalian</label>
+                                            <div id="tgl-pengembalian" class="input-group date" data-date-format="dd-mm-yyyy">
+                                                <input type="text" class="form-control" name="tgl-pengembaliannya" placeholder="Tanggal Pengembalian" readonly>
+                                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="tgl-pengembalian">Cek Denda</label>
+                                        <div class="form-group form-inline">
+                                            <button class="btn btn-warning" id="btnCekDenda">Cek Denda</button>
+                                            <div id="dendanya" class="pull-right ml-2">Rp. 0</div>
+                                            <input type="hidden" name="besarDenda" id="besarDenda" value="0">
+                                            <input type="hidden" name="status" id="status" value="0">
+                                        </div>
+                                        <div id="terlambat"></div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer text-center">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="btnSubmitPengembalian">Submit</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+</div>
+    </div>
+        @section scripts {
+            <script type="text/javascript">
+        $("#tgl-pengembalian").datepicker({
+            format: 'dd/mm/yyyy',
+            autoclose: true,
+            todayHighlight: true
+        }).datepicker('update', ambil = new Date());
+
+        $(document).on("click", ".open-AddBookDialog", function () {
+            var id_order = $(this).data('id');
+            $(".modal-body #id_order").val(id_order);
+        });
+
+        $('#btnCekDenda').click(function (e) {
+            var id_order = $(".modal-body #id_order").val();
+            var tgl_terpilih = $("input[name='tgl-pengembaliannya']").val();
+
+            var data = {}
+            data.id_order = id_order;
+            data.tgl_pengembalian = tgl_terpilih;
+
+            e.preventDefault();
+
+            $.ajax({
+                type: "POST", //or GET
+                url: '@Url.Action("CekDenda", "Pengembalian")',
+                data: JSON.stringify(data),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    var hari = result.Denda.Days;
+                    var sewa = result.HargaSewa;
+
+                    $("input[name='status']").val(1);
+
+                    if (hari <0) {
+                        alert("Tanggal Pengembalian Invaid");
+                    } else if (hari == 0) {
+                        $('#dendanya').html("Tidak ada denda");
+                    }else{
+                        var denda = (hari * 50000) + (sewa*hari);
+                        $('#dendanya').html("Rp." + denda);
+                        $("input[name='besarDenda']").val(denda);
+                        $('#terlambat').html("Anda terlambat : " + hari + " hari");
+                    }
+                }
+            });
+        });
+
+        $('#btnSubmitPengembalian').click(function (e) {
+            e.preventDefault();
+
+            if ($("input[name='status']").val() != 1) {
+                alert("Cek denda dulu!");
+                return;
+            }
+
+            var id_order = $(".modal-body #id_order").val();
+
+            var tgl_terpilih = $("input[name='tgl-pengembaliannya']").val();
+            var denda = $("input[name='besarDenda']").val();
+
+            var data = {}
+            data.id_order = id_order;
+            data.tgl_pengembalian = tgl_terpilih;
+            data.denda = denda;
+
+            $.ajax({
+                type: "POST", //or GET
+                url: '@Url.Action("Kembalikan", "Pengembalian")',
+                data: JSON.stringify(data),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+
+                    if (result.Status == "success") {
+                        alert("Selamat, Pengembalian anda berhasil!");
+                        location.reload();
+                    } else {
+                        alert("Pengembalian gagal!");
+                    }
+                }
+            });
+        });
+            </script>
+        }

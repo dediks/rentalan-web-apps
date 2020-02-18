@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewBag.Title = "Payment Result";
+    Layout = "~/Views/Shared/_LayoutContent.cshtml";
+}
+
+@section sidebar{
+    @Html.Partial("_Sidebar")
+}
+
+<div id="list-mobil" style="min-height: 500px">
+    <h3>Payment Result</h3>
+    <div class="row text-center">
+        <div class="col-12">
+            <br><br>
+            <img src="@Url.Content("~/Images/payment-success.png")" width="150" height="170">
+            <h3>Dear, @Session["email"]</h3>
+            <p style="font-size:20px;color:#5C5C5C;" class="mb-5">
+                Terimaksih, pembayarn anda telah berhasil.<br>
+                Selanjutnya silakan tunggu proses moderasi dari admin.
+            </p>
+            <a href="@Url.Action("Index", "Home")" class="btn btn-success mr-3">Home</a><a href="@Url.Action("Index", "Payment")" class="btn btn-warning ml-4">Payment</a>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var tanggalAmbil = window.localStorage.getItem("TanggalAmbil");
+            var tanggalKembali = window.localStorage.getItem("TanggalKembali");
+
+            $('#el-tgl-ambil').append(tanggalAmbil);
+            $('#el-tgl-kembali').append(tanggalKembali);
+
+
+            $("#btn-cari").click(function (e) {
+                var mobil = $('#nama').val();
+                var brand = $('#brand').val();
+
+                alert("tes");
+                //debugger
+                $.ajax({
+                    url: "/CariMobil/GetSearchMobil?mobil=" + mobil + "&brand=" + brand,
+                    type: "POST",
+                    contentType: "html",
+                    data: mobil,
+                    success: function (result) {
+                        $("#list-mobil").html(result);
+                    },
+                    error: function () {
+                        alert("Error data");
+                    }
+                });
+            });
+        })
+    </script>
+}
+
+

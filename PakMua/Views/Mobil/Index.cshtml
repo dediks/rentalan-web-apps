@@ -1,0 +1,99 @@
+﻿@model IEnumerable<PakMua.tb_mobil>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.nama)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.merk)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.model)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.varian)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.mesin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tenaga)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tempat_duduk)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.transmisi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ac)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.harga_sewa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.deskripsi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.foto)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.nama)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.merk)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.model)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.varian)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.mesin)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tenaga)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tempat_duduk)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.transmisi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ac)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.harga_sewa)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.deskripsi)
+        </td>
+        <td>
+            <img src="@Url.Content(item.foto)" width="200" height="200">
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id_mobil }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id_mobil }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id_mobil })
+        </td>
+    </tr>
+}
+
+</table>

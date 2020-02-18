@@ -1,0 +1,98 @@
+﻿@model PakMua.tb_order
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>tb_order</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.no_invoice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.no_invoice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tgl_order)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tgl_order)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ambil)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ambil)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.kembali)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.kembali)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.jumlah_hari)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.jumlah_hari)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.jumlah_mobil)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.jumlah_mobil)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.total_harga)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.total_harga)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tb_member.nama)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tb_member.nama)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

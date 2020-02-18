@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="13cd0ac192334a37b78f5bf46cd1af11" Name="Diagram1">
+        <EntityTypeShape EntityType="db_rentalanModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_rentalanModel.tb_member" Width="1.5" PointX="0.5" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_rentalanModel.tb_mobil" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_rentalanModel.tb_order" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_rentalanModel.tb_order_mobil" Width="1.5" PointX="5.25" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_rentalanModel.tb_payment" Width="1.5" PointX="5.25" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_rentalanModel.tb_pengembalian" Width="1.5" PointX="5.25" PointY="11.5" IsExpanded="true" />
+        <AssociationConnector Association="db_rentalanModel.FK_tb_order_tb_member" ManuallyRouted="false" />
+        <AssociationConnector Association="db_rentalanModel.FK_tb_order_mobil_tb_mobil" ManuallyRouted="false" />
+        <AssociationConnector Association="db_rentalanModel.FK_tb_order_mobil_tb_order" ManuallyRouted="false" />
+        <AssociationConnector Association="db_rentalanModel.FK_tb_payment_tb_order" ManuallyRouted="false" />
+        <AssociationConnector Association="db_rentalanModel.FK_tb_pengembalian_tb_order" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

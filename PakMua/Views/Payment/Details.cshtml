@@ -1,0 +1,59 @@
+﻿@model PakMua.tb_payment
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tb_payment</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nama)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nama)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nama_bank)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nama_bank)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.no_rekening)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.no_rekening)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.transfer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.transfer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tb_order.no_invoice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tb_order.no_invoice)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id_payment }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

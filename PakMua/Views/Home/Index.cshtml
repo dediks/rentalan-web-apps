@@ -1,0 +1,97 @@
+﻿@using PakMua.Models
+    
+@model CariMobil
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron text-center bg-light" style="min-height : 450px">
+    <h2 class="text-center">Cari Sewa Mobil Murah Anda Disini</h2>
+    <p class="lead">Temukan mobil terbaik kami untuk menemani perjalanan anda</p>
+
+    @using (Html.BeginForm("Index", "CariMobil"))
+    {
+        @Html.AntiForgeryToken()
+        <div class="d-flex justify-content-center mb-5 mt-5">
+
+            <div>
+                @Html.LabelFor(model => model.waktu_ambil, htmlAttributes: new { @class = "control-label" })
+                <div id="datepicker-ambil" class="input-group date" data-date-format="dd-mm-yyyy">
+                    @Html.EditorFor(model => model.waktu_ambil, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                </div>
+            </div>
+            <div class="ml-3">
+                @Html.LabelFor(model => model.waktu_kembali, htmlAttributes: new { @class = "control-label" })
+                <div id="datepicker-kembali" class="input-group date" data-date-format="dd-mm-yyyy">
+                    @Html.EditorFor(model => model.waktu_kembali, new { htmlAttributes = new { @class = "form-control" , @readonly="readonly"} })
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                </div>
+            </div>
+        </div>
+        <input type="submit" id="btn-submit-cari" class="btn btn-warning btn-lg mt-3" value="Cari Mobil">
+    }
+</div>
+
+@*<div class="row">
+    <div class="col-md-4">
+        <h2>Murah</h2>
+        <p>
+            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+            enables a clean separation of concerns and gives you full control over markup
+            for enjoyable, agile development.
+        </p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Mudah</h2>
+        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Berkualitas</h2>
+        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    </div>
+</div>*@
+    
+@section scripts {
+    <script type="text/javascript">
+        $(function () {
+            $("#datepicker-ambil").datepicker({
+                format: 'dd/mm/yyyy',
+                autoclose: true,
+                todayHighlight: true            
+            }).datepicker('update', ambil = new Date());
+
+            $("#datepicker-kembali").datepicker({
+                format: 'dd/mm/yyyy',
+                autoclose: true,
+                todayHighlight: true
+            }).datepicker('update', kembali = new Date());
+
+            $('#btn-submit-cari').click(function (e) {
+                var waktu_ambil =  $("input[name='waktu_ambil']").val();
+                var waktu_kembali = $("input[name='waktu_kembali']").val();
+
+                var d2 = $("#datepicker-kembali").datepicker('getDate');
+                var d1 = $("#datepicker-ambil").datepicker('getDate');
+
+                var diff = 0;
+
+                if (d1 && d2) {
+                    diff = Math.floor((d2.getTime() - d1.getTime()) / 86400000); // ms per day
+
+                    if (diff == 0 || diff < 0) {
+                        alert("Pemilihan tanggal anda tidak valid. Tanggal kembali harus lebih besar.");
+                        e.preventDefault();
+                    }
+
+                    window.localStorage.setItem("TanggalAmbil", waktu_ambil);
+                    window.localStorage.setItem("TanggalKembali", waktu_kembali);
+                }
+            });
+        });
+    </script>
+}

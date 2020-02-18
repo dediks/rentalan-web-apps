@@ -1,0 +1,70 @@
+﻿@model IEnumerable<PakMua.tb_payment>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+    <h3>Riwayat Pembayaran</h3>
+     </div>
+    <div class="card-body" style="min-height : 450px"> 
+        <table class="table">
+            <tr>
+                <th>
+                    Atas Nama
+                </th>
+                <th>
+                    Nama Bank
+                </th>
+                <th>
+                    No Rekening
+                </th>
+                <th>
+                    Nominal
+                </th>
+                <th>
+                    No Invoice
+                </th>
+                <th>Status Pesanan</th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.nama)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.nama_bank)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.no_rekening)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.transfer)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tb_order.no_invoice)
+                    </td>
+                    <td class="text-center">
+                        @if (item.tb_order.status.Trim() == "PAID")
+                        {
+                            <span class="bg-dark p-2 text-white">Sedang Dimoderasi</span>
+                        }
+                        else if (item.tb_order.status.Trim() == "CONFIRMED")
+                        {
+                            <span class="bg-info p-2 text-white">Booking Berjalan</span>
+                        }
+                        else
+                        {
+                            <span class="bg-success p-2 text-white">Terkembalikan</span>
+                        }
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>

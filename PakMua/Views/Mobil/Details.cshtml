@@ -1,0 +1,114 @@
+﻿@model PakMua.tb_mobil
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tb_mobil</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nama)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nama)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.merk)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.merk)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.model)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.model)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.varian)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.varian)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mesin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mesin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tenaga)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tenaga)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tempat_duduk)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tempat_duduk)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.transmisi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.transmisi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ac)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ac)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.harga_sewa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.harga_sewa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.deskripsi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.deskripsi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.foto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.foto)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id_mobil }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

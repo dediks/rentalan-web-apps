@@ -1,0 +1,91 @@
+﻿@model PakMua.tb_order
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tb_order</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.no_invoice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.no_invoice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tgl_order)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tgl_order)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ambil)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ambil)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.kembali)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.kembali)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.jumlah_hari)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.jumlah_hari)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.jumlah_mobil)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.jumlah_mobil)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.total_harga)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.total_harga)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tb_member.nama)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tb_member.nama)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id_order }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

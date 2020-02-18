@@ -1,0 +1,184 @@
+﻿@model PakMua.tb_mobil
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutContent.cshtml";
+}
+
+@section sidebar{
+    @Html.Partial("_Sidebar")
+}
+
+<div id="list-mobil">
+        <div class="row">
+            <div class="col-md-5">
+                <img class="img-fluid" src="@Url.Content(Model.foto)" width="450" height="200">
+            </div>
+            <div class="col-md-7">
+                <h3 class="my-3">@Html.DisplayFor(model => model.nama)</h3>
+                <table class="table" border="0">
+                    <tr>
+                        <td colspan="2">Varian : @Html.DisplayFor(model => model.varian)</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">@Html.DisplayFor(model => model.deskripsi)</td>
+                     </tr>
+                    <tr>
+                        <td>Tersedia : @Html.DisplayFor(model => model.stok)</td>
+                        <td class="text-right">Harga : @Html.DisplayFor(model => model.harga_sewa) / hari</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="text-right">
+                            <span>
+                                Jumlah :
+                                <select name="stock" id="jumlah-order">
+                                    @for (int i = 1; i <= Model.stok; i++)
+                                    {
+                                        <option value="@i">@i</option>
+                                    }
+                                </select>
+                            </span>
+                        </td>
+                    </tr>
+                </table>                             
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        Spesifikiasi Singkat
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-borderless">
+                            <tbody>
+                                <tr>
+                                    <td>@Html.DisplayNameFor(model => model.mesin)</td>
+                                    <td>@Html.DisplayFor(model => model.mesin)</td>
+                                </tr>
+                                <tr>
+                                    <td>@Html.DisplayNameFor(model => model.tenaga)</td>
+                                    <td>@Html.DisplayFor(model => model.tenaga)</td>
+                                </tr>
+                                <tr>
+                                    <td>@Html.DisplayNameFor(model => model.tempat_duduk)</td>
+                                    <td>@Html.DisplayFor(model => model.tempat_duduk)</td>
+                                </tr>
+                                <tr>
+                                    <td>@Html.DisplayNameFor(model => model.transmisi)</td>
+                                    <td>@Html.DisplayFor(model => model.transmisi)</td>
+                                </tr>
+                                <tr>
+                                    <td>@Html.DisplayNameFor(model => model.ac)</td>
+                                    <td>@Html.DisplayFor(model => model.ac)</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <a id="btn-pesan-mobil" class="d-block btn btn-warning btn-lg">Pesan Mobil ini</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>            
+        </div>
+    @*<div class="row">
+
+        <div class="col-md-3 col-sm-6 mb-4">
+            <a href="#">
+                <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+            </a>
+        </div>
+
+        <div class="col-md-3 col-sm-6 mb-4">
+            <a href="#">
+                <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+            </a>
+        </div>
+
+        <div class="col-md-3 col-sm-6 mb-4">
+            <a href="#">
+                <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+            </a>
+        </div>
+
+        <div class="col-md-3 col-sm-6 mb-4">
+            <a href="#">
+                <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+            </a>
+        </div>
+    </div>*@
+</div>
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var tanggalAmbil = window.localStorage.getItem("TanggalAmbil");
+            var tanggalKembali = window.localStorage.getItem("TanggalKembali");
+
+            $('#el-tgl-ambil').append(tanggalAmbil);
+            $('#el-tgl-kembali').append(tanggalKembali);
+
+            $("#btn-cari").click(function (e) {
+                var mobil = $('#nama').val();
+                var brand = $('#brand').val();
+
+                //debugger
+                $.ajax({
+                    url: "/CariMobil/GetSearchMobil?mobil=" + mobil + "&brand=" + brand,
+                    type: "POST",
+                    contentType: "html",
+                    data: mobil,
+                    success: function (result) {
+                        $("#list-mobil").html(result);
+                    },
+                    error: function () {
+                        alert("Error data");
+                    }
+                });
+            });
+
+            $('#btn-pesan-mobil').click(function (e) {
+                e.preventDefault;
+
+                var r = confirm("Yakin booking mobil ini? ");
+                if (r == true) {
+                    var data = {};
+                    var jumlah = $('#jumlah-order').val();
+
+                    data.id_mobil = @Model.id_mobil;
+                    data.jumlah = jumlah;
+                    data.harga = @Model.harga_sewa;
+                    data.waktu_ambil = @Model.harga_sewa;
+                    data.waktu_kembali = @Model.harga_sewa;
+
+                    data.waktu_ambil = tanggalAmbil;
+                    data.waktu_kembali = tanggalKembali;
+                    data.no_invoice = Math.floor(Math.random()*90000) + 10000;
+
+                    $.ajax({
+                        type: "POST", //or GET
+                        url: '@Url.Action("PesanMobil", "CariMobil")',
+                        data: JSON.stringify(data),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (result) {
+                            if(result.Result == "Success"){
+                                var no_invoice = result.No_Invoice;
+
+                                window.location.href = '@Url.Action("HasilPesan","CariMobil")?no_invoice='+no_invoice;
+                            }
+                        }
+                    });
+                };
+            });
+        });
+    </script>
+ }
+
+
+
+
+
+
+

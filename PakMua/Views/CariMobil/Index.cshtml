@@ -1,0 +1,112 @@
+﻿@using PakMua.Models
+
+@model ListSearchMobil
+
+@{
+    ViewBag.Title = "Cari Mobil";
+    Layout = "~/Views/Shared/_LayoutContent.cshtml";
+}
+
+<h3>Cari Sewa Mobil</h3>
+@section sidebar{
+    @Html.Partial("_Sidebar")
+}
+
+<div id="list-mobil">
+    @if (Model.list_mobil != null)
+    {
+        foreach (var item in Model.list_mobil)
+        {
+    <div class="card mb-3">
+        <div class="row">
+            <div class="col-md-4">
+                <img src="@Url.Content(item.foto)" width="280" height="230" class="mt-3">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <td colspan="2" class="p-0">
+                                    <div class="card-title"><h4>@item.nama</h4></div>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody class="p-0">
+                            <tr>
+                                <td>Varian</td>
+                                <td>@item.varian</td>
+                                <td>Status</td>
+                                <td>@item.status</td>
+                            </tr>
+                            <tr>
+                                <td>Mesin</td>
+                                <td>@item.mesin</td>
+                                <td>Kursi</td>
+                                <td>@item.tempat_duduk</td>
+                            </tr>
+                            <tr>
+                                <td>Transmisi</td>
+                                <td>@item.transmisi</td>
+                                <td>Harga</td>
+                                <td>@item.harga_sewa / hari</td>
+                            </tr>
+                            <tr>
+                                <td>Stok</td>
+                                <td>@item.stok</td>
+                                <td colspan="2" class="text-right">
+                                    <a class="btn btn-warning mt-3 btn-pesan-mobilnya" href="@Url.Action("Details","CariMobil", new { id = @item.id_mobil })">Sewa Mobil ini</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+        }
+    }
+
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var tanggalAmbil = window.localStorage.getItem("TanggalAmbil");
+            var tanggalKembali = window.localStorage.getItem("TanggalKembali");
+
+            $('#el-tgl-ambil').append(tanggalAmbil);
+            $('#el-tgl-kembali').append(tanggalKembali);
+
+            @*$('.btn-pesan-mobilnya').click(function (e) {
+                @if(Session["email"] != null){
+                    Url.Action("Login", "Member");                    
+                }
+            });*@
+
+            $("#btn-cari").click(function (e) {
+                var mobil = $('#nama').val();
+                var brand = $('#brand').val();
+
+                //debugger
+                $.ajax({
+                    url: "/CariMobil/GetSearchMobil?mobil=" + mobil + "&brand=" + brand,
+                    type: "POST",
+                    contentType: "html",
+                    data: mobil,
+                    success: function (result) {
+                        $("#list-mobil").html(result);
+                    },
+                    error: function () {
+                        alert("Error data");
+                    }
+                });
+            });
+        })
+    </script>
+}
+
+
+
+
+

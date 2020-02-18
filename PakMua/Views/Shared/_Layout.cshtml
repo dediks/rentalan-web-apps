@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Rentalan</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @if (IsSectionDefined("Styles"))
+    {
+        @RenderSection("Styles", required: false)
+    }
+
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="container" style="margin-top : -20px">
+        <nav class="navbar navbar-expand-lg navbar-light bg-primary text-white">
+            @Html.ActionLink("RN", "Index", "Home", null, new { @class = "navbar-brand text-white" })
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                   @if (Session["role"] != null)
+                   {
+                       if (Session["role"].ToString().Trim() == "member")
+                       {
+                        <li class="nav-item">@Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link text-white" })</li>
+                                <li class="nav-item ml-3">@Html.ActionLink("Order", "Index", "Order", null, new { @class = "nav-link text-white" })</li>
+                                <li class="nav-item ml-3">@Html.ActionLink("Payment", "Index", "Payment", null, new { @class = "nav-link text-white" })</li>
+                       }
+                       else
+                       {
+                        <li class="nav-item ml-3">@Html.ActionLink("Review", "Review", "Order", null, new { @class = "nav-link text-white" })</li>
+                        <li class="nav-item ml-3">@Html.ActionLink("Order", "Index", "Order", null, new { @class = "nav-link text-white" })</li>
+                       }
+                   }
+                </ul>
+            </div>
+
+            @if (Session["email"] != null)
+            {
+                <div>@Session["email"]</div>
+                <div class="nav-item pull-right">@Html.ActionLink("Logout", "Logout", "Member", null, new { @class = "nav-link text-white" })</div>
+            }
+            else
+            {
+                <div class="nav-item pull-right">@Html.ActionLink("Login", "Login", "Member", null, new { @class = "nav-link text-white" })</div>
+            }
+        </nav>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <footer class="p-4 bg-secondary text-white rounded">
+            <p class="ml-5">&copy; @DateTime.Now.Year - rentalan.com</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

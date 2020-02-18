@@ -1,0 +1,58 @@
+﻿
+@using PakMua.Models
+
+@model ListSearchMobil
+
+@if (Model.list_mobil != null)
+{
+    foreach (var item in Model.list_mobil)
+    {
+        <div class="card mb-3">
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="@Url.Content(item.foto)" width="280" height="230" class="mt-3">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <td colspan="2" class="p-0">
+                                        <div class="card-title"><h4>@item.nama</h4></div>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody class="p-0">
+                                <tr>
+                                    <td>Varian</td>
+                                    <td>@item.varian</td>
+                                    <td>Status</td>
+                                    <td>@item.status</td>
+                                </tr>
+                                <tr>
+                                    <td>Mesin</td>
+                                    <td>@item.mesin</td>
+                                    <td>Kursi</td>
+                                    <td>@item.tempat_duduk</td>
+                                </tr>
+                                <tr>
+                                    <td>Transmisi</td>
+                                    <td>@item.transmisi</td>
+                                    <td>Harga</td>
+                                    <td>@item.harga_sewa / hari</td>
+                                </tr>
+                                <tr>
+                                    <td>Stok</td>
+                                    <td>@item.stok</td>
+                                    <td colspan="2" class="text-right">
+                                        <a href="@Url.Action("Details","CariMobil", new { id = @item.id_mobil, waktu_ambil = Model.waktu_ambil, waktu_kembali = Model.waktu_kembali })" class="btn btn-warning mt-3">Sewa Mobil ini</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}

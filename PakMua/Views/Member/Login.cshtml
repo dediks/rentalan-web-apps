@@ -1,0 +1,45 @@
+﻿@model PakMua.Models.Login
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row mt-5" style="min-height: 450px">
+    <div class="col-4 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                <h4>Login</h4>
+            </div>
+            <div class="card-body p-3">
+                @using (Html.BeginForm("Login", "Member"))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group p-3">
+                            <label for="exampleInputEmail1">Email address</label>
+                            @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group p-3">
+                            <label for="exampleInputPassword1">Password</label>
+                            @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control", @type="password"} })
+                            @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group p-3 text-center">
+                            <button type="submit" class="btn btn-info btn-lg mx-auto">Login</button>
+                        </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@*@section scripts {
+    <script type="text/javascript">
+        $(function () {
+            if (Session["email"] == null) {
+                window.localStorage.Clear();
+            }
+        })
+    </script>
+}*@
